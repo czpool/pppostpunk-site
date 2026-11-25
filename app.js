@@ -138,6 +138,7 @@ let pendingImageData = "";
 let saveTimers = new Map();
 let toastTimer;
 let fileDbPromise = null;
+let xlsxLoadingPromise = null;
 
 const elements = {
   categoryNav: document.getElementById("category-nav"),
@@ -769,13 +770,24 @@ function getRowValue(row, headers, aliases) {
   return "";
 }
 
+function ensureXlsxLoaded() {
+  if (window.XLSX) return Promise.resolve();
+  if (xlsxLoadingPromise) return xlsxLoadingPromise;
+  xlsxLoadingPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "vendor/xlsx.full.min.js";
+    script.onload = () => resolve();
+    script.onerror = () => { xlsxLoadingPromise = null; reject(new Error("Excel 解析组件加载失败")); };
+    document.head.appendChild(script);
+  });
+  return xlsxLoadingPromise;
+}
+
 async function importSpreadsheet(file) {
   if (!isLoggedIn()) return;
-  if (!window.XLSX) {
-    showToast("Excel 解析组件未加载，请刷新页面后重试。");
-    return;
-  }
   try {
+    showToast("正在加载 Excel 组件…");
+    await ensureXlsxLoaded();
     showToast("正在解析表格…");
     const buffer = await file.arrayBuffer();
     const workbook = window.XLSX.read(buffer, { type: "array" });
