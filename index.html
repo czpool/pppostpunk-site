@@ -1,0 +1,163 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="低空产业招商企业台账，支持产业分区、信息检索、跟进状态与进度管理。">
+  <title>低空产业招商管理平台</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <path d="M8 26.5 18.7 9.6a3.8 3.8 0 0 1 6.5 0L35.9 26.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M13.4 31.3h23.1M18.2 24.2h13.6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <circle cx="25" cy="16.8" r="3.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="brand-copy">
+          <strong>低空产业招商</strong>
+          <span>企业台账 · 分区管理</span>
+        </div>
+      </div>
+
+      <nav class="category-nav" aria-label="产业分区导航">
+        <p class="nav-label">产业分区</p>
+        <div id="category-nav"></div>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="storage-note">
+          <span class="storage-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3.7a8.3 8.3 0 1 1-5.9 2.4A8.3 8.3 0 0 1 12 3.7Z" stroke="currentColor" stroke-width="1.7"/>
+              <path d="M8.2 12.2 10.7 15l5.2-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div>
+            <strong>进度自动保存</strong>
+            <span>数据保存在当前浏览器</span>
+          </div>
+        </div>
+        <button class="reset-button" id="reset-data" type="button">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4.7 7.4h14.6M9.2 7.4V5.2h5.6v2.2M7 7.4l.7 11.2h8.6L17 7.4M10.1 10.5v4.9M13.9 10.5v4.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          清空本地跟进记录
+        </button>
+      </div>
+    </aside>
+
+    <div class="main-wrap">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">LOW-ALTITUDE INDUSTRY · INVESTMENT DESK</p>
+          <h1>企业招商台账</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="date-chip">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span id="current-date">本地台账</span>
+          </div>
+          <div class="user-chip" aria-label="当前工作台">
+            <span class="user-avatar">招</span>
+            <span>招商工作台</span>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="overview" aria-labelledby="overview-title">
+          <div class="overview-copy">
+            <span class="section-kicker">OVERVIEW</span>
+            <h2 id="overview-title">全域企业跟进看板</h2>
+            <p>围绕低空产业场景完成企业唯一归类，集中查看单位信息、跟进阶段与最新进展。</p>
+            <div class="rule-note">
+              <span>分类口径</span>
+              按主营业务场景归类，每家企业仅进入一个分区；跨场景能力在“归类依据”中说明。
+            </div>
+          </div>
+          <div class="metrics" aria-label="招商数据概览">
+            <article class="metric-card">
+              <span class="metric-label">企业总数</span>
+              <div><strong id="stat-total">0</strong><span>家</span></div>
+              <small>已收录单位</small>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">已跟进</span>
+              <div><strong id="stat-followed">0</strong><span>家</span></div>
+              <small>已联系及以后阶段</small>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">意向确认</span>
+              <div><strong id="stat-intent">0</strong><span>家</span></div>
+              <small>进入重点推进</small>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">已签约</span>
+              <div><strong id="stat-signed">0</strong><span>家</span></div>
+              <small>招商落地成果</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="toolbar" aria-label="企业检索与筛选">
+          <label class="search-box" for="company-search">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="10.8" cy="10.8" r="6.4" stroke="currentColor" stroke-width="1.8"/>
+              <path d="m15.5 15.5 4.2 4.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <input id="company-search" type="search" autocomplete="off" placeholder="搜索企业、联系人、电话或业务关键词">
+            <kbd>/</kbd>
+          </label>
+          <label class="select-field" for="status-filter">
+            <span>跟进状态</span>
+            <select id="status-filter">
+              <option value="全部状态">全部状态</option>
+              <option value="未接触">未接触</option>
+              <option value="已联系">已联系</option>
+              <option value="已拜访">已拜访</option>
+              <option value="意向确认">意向确认</option>
+              <option value="已签约">已签约</option>
+            </select>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m8 10 4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </label>
+        </section>
+
+        <section class="board-section" aria-labelledby="board-title">
+          <div class="board-heading">
+            <div>
+              <div class="heading-line">
+                <h2 id="board-title">全部单位</h2>
+                <span class="result-count" id="result-count">0 家</span>
+              </div>
+              <p id="result-meta">按产业分区查看企业信息</p>
+            </div>
+            <button class="clear-button" id="clear-filters" type="button" hidden>
+              清除筛选
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="m7 7 10 10M17 7 7 17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+
+          <div id="company-grid" class="company-grid" aria-live="polite"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <span>数据来源：公司信息汇总表</span>
+        <span>低空产业招商管理平台 · 本地工作版</span>
+      </footer>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
